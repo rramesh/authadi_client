@@ -3,10 +3,8 @@
  */
 package com.rr.authadi.client
 
+import com.rr.proto.authadi.*
 import kotlinx.coroutines.*
-import com.rr.proto.authadi.UserImmigrationGrpc
-import com.rr.proto.authadi.UserImmigrationRequest
-import com.rr.proto.authadi.addUserIdentity
 import io.grpc.ManagedChannelBuilder
 import java.util.*
 
@@ -15,15 +13,23 @@ class App {
         val localhost = ManagedChannelBuilder.forAddress("localhost", 5987)
                 .usePlaintext().build()
         val immigration = UserImmigrationGrpc.newStub(localhost)
-        val requestBuilder = UserImmigrationRequest.newBuilder()
-        requestBuilder.userKey = "johndoe@mailserver.com"
-        requestBuilder.userReferenceId = UUID.randomUUID().toString()
-        requestBuilder.password = "SecretPassword!"
-        requestBuilder.active = true
-        val request = requestBuilder.build()
+        val request = UserImmigrationRequest.newBuilder()
+                .setUserKey("johndoe@mailserver.com")
+                .setUserReferenceId(UUID.randomUUID().toString())
+                .setPassword("SecretPassword!")
+                .setActive(true)
+                .build()
+
+        val authentication = UserAuthenticationGrpc.newStub(localhost)
+        val authRequest = PasswordAuthenticationRequest.newBuilder()
+                .setUserKey("johndoe@mailserver.com")
+                .setPassword("SecretPassword!")
+                .build()
         runBlocking {
             val response = immigration.addUserIdentity(request)
             println(response)
+            val authResponse = authentication.passwordAuthenticate(authRequest)
+            println(authResponse)
         }
     }
 }

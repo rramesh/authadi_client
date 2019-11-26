@@ -6,6 +6,7 @@ build
 /src/main/resources/application.properties
 /src/main/resources/flyway.properties
 /src/test/resources/test.properties
+.protopkg.properties
 
 #Ignore IDE folders
 .idea
