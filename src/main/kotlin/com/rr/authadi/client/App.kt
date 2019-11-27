@@ -30,6 +30,13 @@ class App {
             println(response)
             val authResponse = authentication.passwordAuthenticate(authRequest)
             println(authResponse)
+            val sessionRequest = UserSessionRequest.newBuilder()
+                    .setUuid(authResponse.uuid)
+                    .setTokenType(UserSessionRequest.TokenType.BEARER)
+                    .setToken(authResponse.bearerToken)
+                    .build()
+            val sessionResponse = authentication.validateUserSession(sessionRequest)
+            println(sessionResponse)
         }
     }
 }
