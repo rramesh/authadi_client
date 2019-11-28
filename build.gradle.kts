@@ -35,7 +35,7 @@ dependencies {
     // Use the Kotlin JDK 8 standard library.
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
-    implementation("com.rr", "proto", "1.0.2-p02")
+    implementation("com.rr", "proto", "1.0.3")
 
     compile("org.jetbrains.kotlinx", "kotlinx-coroutines-core", "1.3.2")
     // netty to run gRPC
